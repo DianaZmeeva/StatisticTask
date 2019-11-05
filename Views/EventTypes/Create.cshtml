@@ -1,0 +1,77 @@
+﻿@model WebApplication1.Models.ViewModels.EventTypeViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create type of sport event</h2>
+
+<div class="blog-post-editor">
+    <form asp-action="Create" asp-route-sportId="@ViewBag.Sport.Id">
+        <div class="form-horizontal">
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfPlayers" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="NumberOfPlayers" class="form-control" />
+                    <span asp-validation-for="NumberOfPlayers" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index" asp-controller="KindOfSports" asp-route-sportId="@ViewBag.Sport.Id">Back to sports</a>
+</div>
+
+
+@*<h2>Create</h2>
+
+<h4>EventType</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfPlayers" class="control-label"></label>
+                <input asp-for="NumberOfPlayers" class="form-control" />
+                <span asp-validation-for="NumberOfPlayers" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KindOfSportId" class="control-label"></label>
+                <select asp-for="KindOfSportId" class ="form-control" asp-items="ViewBag.KindOfSportId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

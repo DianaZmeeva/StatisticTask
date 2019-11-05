@@ -1,0 +1,45 @@
+﻿@model WebApplication1.Models.ViewModels.EventTypeViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit sport event</h2>
+
+
+<div class="blog-post-editor">
+    <form asp-action="Edit">
+        <div class="form-horizontal">
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfPlayers" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="NumberOfPlayers" class="form-control" />
+                    <span asp-validation-for="NumberOfPlayers" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index" asp-controller="KindOfSports" asp-route-sportId="@ViewBag.Sport.Id">Back to sports</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

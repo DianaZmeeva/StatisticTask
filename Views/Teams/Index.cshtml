@@ -1,0 +1,52 @@
+﻿@model IEnumerable<WebApplication1.Models.Team>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Teams</h2>
+
+@foreach (var item in Model)
+{
+    <div class="panel panel-default forum-category">
+        <div class="panel-heading">
+            <strong style="font-size: 1.5em">@item.Name</strong>
+
+            @*@if (User.IsInRole(ApplicationRoles.Administrators))
+                {*@
+                    <text>|</text><a asp-action="Edit" asp-route-id="@item.Id">Edit</a><text>|</text>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a><text>|</text>
+                    <a asp-action="Create" asp-controller="Players" asp-route-teamId="@item.Id"> Add player </a>
+            <p>@Html.DisplayFor(modelItem => item.KindOfSport.Name)</p>
+
+            @*}*@
+        </div>
+        <table class="table table-striped">
+            <tbody>
+                @foreach (var player in item.Players)
+                {
+                    <tr>
+                        <td>
+                            <p style="font-size: 1.5em">Player: @player.FullName</p>
+                            <p>Position: @player.Position</p>
+                            @*@if (User.IsInRole(ApplicationRoles.Administrators))
+                                {*@
+                                    <a asp-action="Edit" asp-controller="Players" asp-route-id="@player.Id">Edit</a><text>|</text>
+                                    <a asp-action="Delete" asp-controller="Players" asp-route-id="@player.Id">Delete</a><text>|</text>
+                            @*}*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@*@if (User.IsInRole(ApplicationRoles.Administrators))
+    {*@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a asp-action="Create" asp-controller="Teams">Create new team</a>
+    </div>
+</div>
+@*}*@

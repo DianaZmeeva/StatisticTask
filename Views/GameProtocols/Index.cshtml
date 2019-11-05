@@ -1,0 +1,54 @@
+﻿@model IEnumerable<WebApplication1.Models.GameProtocol>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Teams</h2>
+
+@foreach (var item in Model)
+{
+    <div class="panel panel-default forum-category">
+        <div class="panel-heading">
+            <strong style="font-size: 1.5em">Game: @item.HomeTeam.Name vs @item.RivalTeam.Name</strong>
+
+            @*@if (User.IsInRole(ApplicationRoles.Administrators))
+                {*@
+                    <text>|</text><a asp-action="Edit" asp-route-id="@item.Id">Edit</a><text>|</text>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a><text>|</text>
+                    <a asp-action="Create" asp-controller="GameEvents" asp-route-protocolId="@item.Id"> Add event </a>
+                    <p>Date: @item.Time</p>
+                    <p>Duration of game: @item.DurationInMinutes</p>
+            @*}*@
+        </div>
+        <table class="table table-striped">
+            <tbody>
+                @foreach (var e in item.GameEvents)
+                {
+                    <tr>
+                        <td>
+                            <p>e.EventType.Name</p>
+                            @foreach (var player in e.Players)
+                            {
+                                <p>Player: @player.FullName</p>
+                            }
+                            @if (User.IsInRole(ApplicationRoles.Administrators))
+                                {
+                                    <a asp-action="Delete" asp-controller="GameEvents" asp-route-id="@e.Id">Delete</a><text>|</text>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@*@if (User.IsInRole(ApplicationRoles.Administrators))
+    {*@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a asp-action="Create" asp-controller="GameProtocols">Create new protocol</a>
+    </div>
+</div>
+@*}*@
