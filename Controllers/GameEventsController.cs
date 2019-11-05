@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Models;
 using WebApplication1.Models.ViewModel;
+using System.Collections.ObjectModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = ApplicationRoles.Administrators)]
     public class GameEventsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -97,12 +100,39 @@ namespace WebApplication1.Controllers
 
             if (this.ModelState.IsValid)
             {
+                
                 var gameEvent = new GameEvent
                 {
                     GameProtocolId = gameProtocol.Id,
                     TimeInMinutes = model.TimeInMinutes,
                     EventTypeId = model.EventTypeId
                 };
+
+                var eventType = await _context.EventTypes
+                .SingleOrDefaultAsync(m => m.Id == gameEvent.EventTypeId);
+
+                if(model.Players.Count != eventType.NumberOfPlayers)
+                {
+                    this.ModelState.AddModelError("Players", "Another number of players");
+                    return this.View(model);
+                }
+
+                if (model.TimeInMinutes > gameProtocol.DurationInMinutes)
+                {
+                    this.ModelState.AddModelError("TimeInMinutes", "Required time");
+                    return this.View(model);
+                }
+
+                gameEvent.Players = new Collection<Player>();
+                foreach (Int32 playerId in model.Players)
+                {
+                    var player = await _context.Players
+                    .SingleOrDefaultAsync(m => m.Id == playerId);
+                    if (player != null)
+                    {
+                        gameEvent.Players.Add(player);
+                    }
+                }
 
                 _context.GameEvens.Add(gameEvent);
                 await _context.SaveChangesAsync();
@@ -111,15 +141,6 @@ namespace WebApplication1.Controllers
 
             this.ViewBag.Protocol = gameProtocol;
             return this.View(model);
-            //if (ModelState.IsValid)
-            //{
-            //    _context.Add(gameEvent);
-            //    await _context.SaveChangesAsync();
-            //    return this.RedirectToAction("Index", "GameProtocols");
-            //}
-            //ViewData["EventTypeId"] = new SelectList(_context.EventTypes, "Id", "Name", gameEvent.EventTypeId);
-            //ViewData["GameProtocolId"] = new SelectList(_context.GameProtocols, "Id", "Id", gameEvent.GameProtocolId);
-            //return View(gameEvent);
         }
         // GET: GameEvents/Delete/5
         public async Task<IActionResult> Delete(int? id)

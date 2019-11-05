@@ -10,7 +10,7 @@ namespace WebApplication1.Models.ViewModel
     {
         public Int32 EventTypeId { get; set; }
       
-        public String Players { get; set; }
+        public ICollection<Int32> Players { get; set; }
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Invalid quantity")]

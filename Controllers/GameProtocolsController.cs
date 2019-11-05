@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Models;
 using WebApplication1.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = ApplicationRoles.Administrators)]
     public class GameProtocolsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,6 +23,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: GameProtocols
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var items = await _context.GameProtocols

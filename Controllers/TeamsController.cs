@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Models;
 using WebApplication1.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = ApplicationRoles.Administrators)]
     public class TeamsController : Controller
     {
         private readonly ApplicationDbContext _context;

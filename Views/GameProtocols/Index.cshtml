@@ -12,14 +12,14 @@
         <div class="panel-heading">
             <strong style="font-size: 1.5em">Game: @item.HomeTeam.Name vs @item.RivalTeam.Name</strong>
 
-            @*@if (User.IsInRole(ApplicationRoles.Administrators))
-                {*@
+            @if (User.IsInRole(ApplicationRoles.Administrators))
+                {
                     <text>|</text><a asp-action="Edit" asp-route-id="@item.Id">Edit</a><text>|</text>
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a><text>|</text>
                     <a asp-action="Create" asp-controller="GameEvents" asp-route-protocolId="@item.Id"> Add event </a>
                     <p>Date: @item.Time</p>
                     <p>Duration of game: @item.DurationInMinutes</p>
-            @*}*@
+            }
         </div>
         <table class="table table-striped">
             <tbody>
@@ -44,11 +44,11 @@
     </div>
 }
 
-@*@if (User.IsInRole(ApplicationRoles.Administrators))
-    {*@
+@if (User.IsInRole(ApplicationRoles.Administrators))
+    {
 <div class="panel panel-default">
     <div class="panel-heading">
         <a asp-action="Create" asp-controller="GameProtocols">Create new protocol</a>
     </div>
 </div>
-@*}*@
+}
